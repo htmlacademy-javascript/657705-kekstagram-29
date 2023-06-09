@@ -1,13 +1,13 @@
 const checkStringLength = (str, maxLength) => str.length <= maxLength;
 
-// console.log(checkStringLength('проверяемая строка', 20)); // true - ok
+checkStringLength('проверяемая строка', 20); // true - ok
 // console.log(checkStringLength('проверяемая строка', 18)); // true - ok
 // console.log(checkStringLength('проверяемая строка', 10)); // false - ok
 
 
 const isPalindrome = (str) => str.toLowerCase().replaceAll(' ', '').split('').reverse().join('') === str.toLowerCase().replaceAll(' ', '');
 
-// console.log(isPalindrome('топот')); // true - ok
+isPalindrome('топот'); // true - ok
 // console.log(isPalindrome('ДовОд')); // true - ok
 // console.log(isPalindrome('Кекс')); // false - ok
 // console.log(isPalindrome('Лёша на полке клопа нашёл ')); // true - ok
@@ -24,7 +24,7 @@ const getNumberFromString = (str) => {
   return number !== '' ? parseInt(number, 10) : NaN;
 };
 
-// console.log(getNumberFromString('2023 год'));
+getNumberFromString('2023 год');
 // console.log(getNumberFromString('ECMAScript 2022'));
 // console.log(getNumberFromString('1 кефир, 0.5 батона'));
 // console.log(getNumberFromString('агент 007'));
