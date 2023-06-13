@@ -4,8 +4,21 @@ checkStringLength('проверяемая строка', 20); // true - ok
 // console.log(checkStringLength('проверяемая строка', 18)); // true - ok
 // console.log(checkStringLength('проверяемая строка', 10)); // false - ok
 
+const isPalindrome = (str) => {
+  str = str.replaceAll(' ', '').toLowerCase();
+  let left = 0;
+  let right = str.length - 1;
 
-const isPalindrome = (str) => str.toLowerCase().replaceAll(' ', '').split('').reverse().join('') === str.toLowerCase().replaceAll(' ', '');
+  while (left <= right) {
+    if (str[left] !== str[right]) {
+      return false;
+    }
+    left++;
+    right--;
+  }
+
+  return true;
+};
 
 isPalindrome('топот'); // true - ok
 // console.log(isPalindrome('ДовОд')); // true - ok
