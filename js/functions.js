@@ -34,7 +34,7 @@ const getNumberFromString = (str) => {
     }
   });
 
-  return number !== '' ? parseInt(number, 10) : NaN;
+  return parseInt(number, 10);
 };
 
 getNumberFromString('2023 год');
