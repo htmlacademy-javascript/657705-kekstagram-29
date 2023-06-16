@@ -34,29 +34,19 @@ const getRandomIntegerFromRange = (a, b) => {
   return Math.floor(result);
 };
 
-const getRandomInteger = (range = {}) => {
-  if (Object.keys(range).length !== 0) {
-    return getRandomIntegerFromRange(range.min, range.max);
-  }
-
-  return Math.floor(Math.random() * 100) + 1; // Проблема #1
-};
-
-
-const createUniqueRandomId = (range = {}) => {
+const createUniqueRandomId = (min, max) => {
   const previousValues = [];
 
-  return function () {
-    let currentValue = getRandomInteger(range);
+  return () => {
+    let currentValue = getRandomIntegerFromRange(min, max);
 
-    if (Object.keys(range).length !== 0) {
-      if (previousValues.length >= (range.max - range.min + 1)) {
-        return null;
-      }
+    if (previousValues.length >= (max - min + 1)) {
+      console.error(`Перебраны все числа из диапазона от ${ min } до ${ max}`);
+      return null;
     }
 
     while (previousValues.includes(currentValue)) {
-      currentValue = getRandomInteger(range);
+      currentValue = getRandomIntegerFromRange(min, max);
     }
 
     previousValues.push(currentValue);
@@ -65,58 +55,56 @@ const createUniqueRandomId = (range = {}) => {
   };
 };
 
-const createComment = (id, url, message, name) => ({
-  id,
-  avatar: url,
-  message,
-  name,
-});
+const getRandomArrayElement = (elements) => elements[getRandomIntegerFromRange(0, elements.length - 1)];
 
-const createComments = (min, max) => {
-  const comments = [];
+const createPhoto = (id, urlId, comments) => ({
 
-  const generateCommentId = createUniqueRandomId();
+  /**
+   * id - число от 1 до 25. Идентификаторы не должны повторяться
+   * url - число в пути от 1 до 25. Адреса картинок не должны повторяться
+   * description - рандомное описание из массива
+   * likes - cлучайное число от 15 до 200.
+   * comments - массив объектов (от 0 до 30)
+   */
 
-  const getAvatarUrl = () => `img/avatar-${getRandomInteger({min: 1, max: 6})}.svg`;
-  const getMessage = () => MESSAGES[getRandomInteger({min: 0, max: MESSAGES.length - 1})];
-  const getName = () => NAMES[getRandomInteger({min: 0, max: NAMES.length - 1})];
-
-  for (let i = min; i < max; i++) {
-    comments.push(createComment(generateCommentId(), getAvatarUrl(), getMessage(), getName()));
-  }
-
-  return comments;
-};
-
-const createPhoto = (id, url, description, likes, comments) => ({
-  id,
-  url,
-  description,
-  likes,
+  id: id(),
+  url: `photos/${urlId()}.jpg`,
+  description: getRandomArrayElement(DESCRIPTIONS),
+  likes: getRandomIntegerFromRange(15, 200),
   comments,
 });
 
 
-const createPhotos = (min, max) => {
-  const photos = [];
+const createCommentForPhoto = (id) => ({
 
-  const generatePhotoId = createUniqueRandomId({min, max});
-  const generatePhotoUrlId = createUniqueRandomId({min, max});
+  /**
+   * id - любое число. Идентификаторы не должны повторяться
+   * avatar - число в пути от 1 до 6
+   * message - рандомное сообщение из массива
+   * name - рандомное имя из массива
+   */
 
-  const getPhotoUrl = () => `photos/${generatePhotoUrlId()}.jpg`;
-  const getDescription = () => DESCRIPTIONS[getRandomInteger({min: 0, max: DESCRIPTIONS.length - 1})];
-  const getLikes = () => getRandomInteger({min: 15, max: 200});
-  const getComments = () => {
-    const generateCommentsLength = getRandomInteger({min: 0, max: 30});
-    return generateCommentsLength !== 0 ? createComments(1, generateCommentsLength) : 'Комментариев нету';
-  };
+  id: id(),
+  avatar: `img/avatar-${getRandomIntegerFromRange(1, 6)}.svg`,
+  message: getRandomArrayElement(MESSAGES),
+  name: getRandomArrayElement(NAMES),
+});
 
-  for (let i = min; i <= max; i++) {
-    photos.push(createPhoto(generatePhotoId(), getPhotoUrl(), getDescription(), getLikes(), getComments()));
-  }
+const createPhotos = () => {
 
-  return photos;
+  const getUniquePhotoId = createUniqueRandomId(1, 25);
+  const getUniquePhotoUrlId = createUniqueRandomId(1, 25);
+
+  return () => Array.from({ length: 25 }, () => {
+    const uniqueCommentId = createUniqueRandomId(1, 100);
+    const comments = Array.from({ length: getRandomIntegerFromRange(0, 30) }, () => createCommentForPhoto(uniqueCommentId));
+
+    return createPhoto(getUniquePhotoId, getUniquePhotoUrlId, comments);
+  });
 };
 
-const gallery = createPhotos(1, 25);
+
+const getGallery = createPhotos();
+const gallery = getGallery();
+
 console.log(gallery);
