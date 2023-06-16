@@ -57,6 +57,15 @@ const createUniqueRandomId = (min, max) => {
 
 const getRandomArrayElement = (elements) => elements[getRandomIntegerFromRange(0, elements.length - 1)];
 
+const getRandomArrayElements = (elements, quantity = 1) => {
+  const array = [];
+  for (let i = 0; i < quantity; i++) {
+    array.push(elements[getRandomIntegerFromRange(0, elements.length - 1)]);
+  }
+
+  return array;
+};
+
 const createPhoto = (id, urlId, comments) => ({
 
   /**
@@ -86,7 +95,7 @@ const createCommentForPhoto = (id) => ({
 
   id: id(),
   avatar: `img/avatar-${getRandomIntegerFromRange(1, 6)}.svg`,
-  message: getRandomArrayElement(MESSAGES),
+  message: getRandomArrayElements(MESSAGES, getRandomIntegerFromRange(1, 2)).join(' '),
   name: getRandomArrayElement(NAMES),
 });
 
