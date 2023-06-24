@@ -30,9 +30,8 @@ const getNumberFromString = (str) => {
 
 const getMinutesFromTime = (time) => {
   const [hour, minute] = time.split(':').map((el) => parseInt(el, 10));
-  const minutes = hour * 60 + minute;
+  return hour * 60 + minute;
 
-  return minutes;
 };
 
 const isMeetingAvailable = (startTime, endTime, time, duration) => {
@@ -42,11 +41,8 @@ const isMeetingAvailable = (startTime, endTime, time, duration) => {
   const startMeeting = getMinutesFromTime(time);
   const endMeeting = startMeeting + duration;
 
-  if (startMeeting >= startWork && endMeeting <= endWork) {
-    return true;
-  }
+  return startMeeting >= startWork && endMeeting <= endWork;
 
-  return false;
 };
 
 isMeetingAvailable('08:00', '17:30', '14:00', 90); // true
