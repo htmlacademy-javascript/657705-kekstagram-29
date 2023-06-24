@@ -1,9 +1,5 @@
 const checkStringLength = (str, maxLength) => str.length <= maxLength;
 
-checkStringLength('проверяемая строка', 20); // true - ok
-// console.log(checkStringLength('проверяемая строка', 18)); // true - ok
-// console.log(checkStringLength('проверяемая строка', 10)); // false - ok
-
 const isPalindrome = (str) => {
   str = str.replaceAll(' ', '').toLowerCase();
   let left = 0;
@@ -20,11 +16,6 @@ const isPalindrome = (str) => {
   return true;
 };
 
-isPalindrome('топот'); // true - ok
-// console.log(isPalindrome('ДовОд')); // true - ok
-// console.log(isPalindrome('Кекс')); // false - ok
-// console.log(isPalindrome('Лёша на полке клопа нашёл ')); // true - ok
-
 const getNumberFromString = (str) => {
   let number = '';
 
@@ -37,12 +28,34 @@ const getNumberFromString = (str) => {
   return parseInt(number, 10);
 };
 
-getNumberFromString('2023 год');
-// console.log(getNumberFromString('ECMAScript 2022'));
-// console.log(getNumberFromString('1 кефир, 0.5 батона'));
-// console.log(getNumberFromString('агент 007'));
-// console.log(getNumberFromString('а я томат'));
-// console.log(getNumberFromString(2023));
-// console.log(getNumberFromString(-1));
-// console.log(getNumberFromString(1.5));
-// all ok
+const getMinutesFromTime = (time) => {
+  const [hour, minute] = time.split(':').map((el) => parseInt(el, 10));
+  const minutes = hour * 60 + minute;
+
+  return minutes;
+};
+
+const isMeetingAvailable = (startTime, endTime, time, duration) => {
+  const startWork = getMinutesFromTime(startTime);
+  const endWork = getMinutesFromTime(endTime);
+
+  const startMeeting = getMinutesFromTime(time);
+  const endMeeting = startMeeting + duration;
+
+  if (startMeeting >= startWork && endMeeting <= endWork) {
+    return true;
+  }
+
+  return false;
+};
+
+isMeetingAvailable('08:00', '17:30', '14:00', 90); // true
+console.log('isMeetingAvailable(\'08:00\', \'17:30\', \'14:00\', 90) :', isMeetingAvailable('08:00', '17:30', '14:00', 90));
+isMeetingAvailable('8:0', '10:0', '8:0', 120); // true
+console.log('isMeetingAvailable(\'8:0\', \'10:0\', \'8:0\', 120) :', isMeetingAvailable('8:0', '10:0', '8:0', 120));
+isMeetingAvailable('08:00', '14:30', '14:00', 90); // false
+console.log('isMeetingAvailable(\'08:00\', \'14:30\', \'14:00\', 90) :', isMeetingAvailable('08:00', '14:30', '14:00', 90));
+isMeetingAvailable('14:00', '17:30', '08:0', 90); // false
+console.log('isMeetingAvailable(\'14:00\', \'17:30\', \'08:0\', 90) :', isMeetingAvailable('14:00', '17:30', '08:0', 90));
+isMeetingAvailable('8:00', '17:30', '08:00', 900); // false
+console.log('isMeetingAvailable(\'8:00\', \'17:30\', \'08:00\', 900) :', isMeetingAvailable('8:00', '17:30', '08:00', 900));
