@@ -48,7 +48,6 @@ const createPhoto = (id, urlId, comments) => ({
   comments,
 });
 
-
 const createCommentForPhoto = (id) => ({
   id: id(),
   avatar: `img/avatar-${getRandomIntegerFromRange(1, 6)}.svg`,
