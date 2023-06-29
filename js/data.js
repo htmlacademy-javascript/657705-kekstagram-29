@@ -1,7 +1,5 @@
 import { getRandomArrayElement, getRandomArrayElements, getRandomIntegerFromRange, createUniqueRandomId } from './util.js';
 
-const PHOTOS_COUNT = 25;
-
 const Like = {
   MIN: 15,
   MAX: 200
@@ -60,7 +58,7 @@ const createPhotos = () => {
   const getUniquePhotoId = createUniqueRandomId(1, 25);
   const getUniquePhotoUrlId = createUniqueRandomId(1, 25);
 
-  return () => Array.from({ length: PHOTOS_COUNT }, () => {
+  return (photosCount) => Array.from({ length: photosCount }, () => {
     const uniqueCommentId = createUniqueRandomId(1, 100);
     const comments = Array.from({ length: getRandomIntegerFromRange(Comment.MIN, Comment.MAX) }, () => createCommentForPhoto(uniqueCommentId));
 
@@ -68,4 +66,6 @@ const createPhotos = () => {
   });
 };
 
-export { createPhotos };
+const getPhotos = createPhotos();
+
+export { getPhotos };

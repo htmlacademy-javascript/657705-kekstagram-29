@@ -44,14 +44,3 @@ const isMeetingAvailable = (startTime, endTime, time, duration) => {
   return startMeeting >= startWork && endMeeting <= endWork;
 
 };
-
-isMeetingAvailable('08:00', '17:30', '14:00', 90); // true
-console.log('isMeetingAvailable(\'08:00\', \'17:30\', \'14:00\', 90) :', isMeetingAvailable('08:00', '17:30', '14:00', 90));
-isMeetingAvailable('8:0', '10:0', '8:0', 120); // true
-console.log('isMeetingAvailable(\'8:0\', \'10:0\', \'8:0\', 120) :', isMeetingAvailable('8:0', '10:0', '8:0', 120));
-isMeetingAvailable('08:00', '14:30', '14:00', 90); // false
-console.log('isMeetingAvailable(\'08:00\', \'14:30\', \'14:00\', 90) :', isMeetingAvailable('08:00', '14:30', '14:00', 90));
-isMeetingAvailable('14:00', '17:30', '08:0', 90); // false
-console.log('isMeetingAvailable(\'14:00\', \'17:30\', \'08:0\', 90) :', isMeetingAvailable('14:00', '17:30', '08:0', 90));
-isMeetingAvailable('8:00', '17:30', '08:00', 900); // false
-console.log('isMeetingAvailable(\'8:00\', \'17:30\', \'08:00\', 900) :', isMeetingAvailable('8:00', '17:30', '08:00', 900));
