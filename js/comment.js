@@ -77,4 +77,4 @@ const renderComments = (comments, step) => {
   loadComments(comments, 0, step);
 };
 
-export { renderComments };
+export { renderComments, unsubscribeToClick };

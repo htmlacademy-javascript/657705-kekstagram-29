@@ -1,4 +1,4 @@
-import { renderComments } from './comment.js';
+import { renderComments, unsubscribeToClick } from './comment.js';
 import { isEscapeKey } from './util.js';
 
 const COMMENTS_RENDER_STEP = 5;
@@ -17,6 +17,8 @@ function closePhoto() {
 
   document.removeEventListener('keydown', onDocumentKeydown);
   photo.querySelector('.big-picture__cancel').removeEventListener('click', closePhoto);
+
+  unsubscribeToClick();
 }
 
 const createPhoto = ({ url, likes, comments, description }) => {
