@@ -37,9 +37,18 @@ const getRandomArrayElements = (elements, quantity = 1) => {
   return array;
 };
 
+const subscribeToEvent = (target, eventName, handler) => {
+  target.addEventListener(eventName, handler);
+  return () => target.removeEventListener(eventName, handler);
+};
+
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
 export {
   getRandomIntegerFromRange,
   createUniqueRandomId,
   getRandomArrayElement,
-  getRandomArrayElements
+  getRandomArrayElements,
+  subscribeToEvent,
+  isEscapeKey
 };

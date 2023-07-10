@@ -7,7 +7,7 @@ const Like = {
 
 const Comment = {
   MIN: 0,
-  MAX: 30
+  MAX: 10
 };
 
 const NAMES = [
