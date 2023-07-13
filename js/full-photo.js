@@ -1,25 +1,9 @@
-import { renderComments, unsubscribeToClick } from './comment.js';
-import { isEscapeKey } from './util.js';
+import { renderComments } from './comment.js';
+import { openModal } from './modal-utils.js';
 
 const COMMENTS_RENDER_STEP = 5;
 
 const photo = document.querySelector('.big-picture');
-
-function onDocumentKeydown(evt) {
-  if (isEscapeKey(evt)) {
-    closePhoto();
-  }
-}
-
-function closePhoto() {
-  photo.classList.add('hidden');
-  document.body.classList.remove('modal-open');
-
-  document.removeEventListener('keydown', onDocumentKeydown);
-  photo.querySelector('.big-picture__cancel').removeEventListener('click', closePhoto);
-
-  unsubscribeToClick();
-}
 
 const createPhoto = ({ url, likes, comments, description }) => {
   photo.querySelector('.big-picture__img').children[0].src = url;
@@ -31,13 +15,8 @@ const createPhoto = ({ url, likes, comments, description }) => {
 };
 
 const renderPhoto = (photoData) => {
-  photo.classList.remove('hidden');
-  document.body.classList.add('modal-open');
-
   createPhoto(photoData);
-
-  document.addEventListener('keydown', onDocumentKeydown);
-  photo.querySelector('.big-picture__cancel').addEventListener('click', closePhoto);
+  openModal(photo, '.big-picture__cancel');
 };
 
 export { renderPhoto };
