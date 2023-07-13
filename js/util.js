@@ -44,11 +44,21 @@ const subscribeToEvent = (target, eventName, handler) => {
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
+const hasDuplicates = (array) => {
+  for (let i = 0; i < array.length; i++) {
+    if (array.indexOf(array[i]) !== i) {
+      return true;
+    }
+  }
+  return false;
+};
+
 export {
   getRandomIntegerFromRange,
   createUniqueRandomId,
   getRandomArrayElement,
   getRandomArrayElements,
   subscribeToEvent,
-  isEscapeKey
+  isEscapeKey,
+  hasDuplicates
 };
