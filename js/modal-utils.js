@@ -1,4 +1,5 @@
 import { subscribeToEvent, isEscapeKey } from './util.js';
+import { resetForm } from './form/form.js';
 
 let unsubscribeToClickEvent;
 let unsubscribeToKeydownEvent;
@@ -19,9 +20,7 @@ function closeModal(el, isForm) {
   unsubscribeToClickEvent();
 
   if (isForm) {
-    const form = el.parentNode;
-
-    form.querySelector('.img-upload__input').value = '';
+    resetForm();
   }
 }
 
