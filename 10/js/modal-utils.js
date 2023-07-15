@@ -27,7 +27,7 @@ function closeModal(el, isForm) {
 
 function onDocumentKeydown(el, isForm) {
   return (evt) => {
-    if (isEscapeKey(evt)) {
+    if (isEscapeKey(evt) && !evt.target.closest('.text__hashtags') && !evt.target.closest('.text__description')) {
       closeModal(el, isForm);
     }
   };
