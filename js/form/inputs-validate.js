@@ -1,5 +1,4 @@
-import { openModal } from './modal-utils.js';
-import { hasDuplicates } from './util.js';
+import { hasDuplicates } from '../util.js';
 
 const invalidText = {
   hashtags: [],
@@ -57,14 +56,9 @@ const validateDescription = (value) => {
   return invalidText.description.length === 0;
 };
 
-const initialForm = () => {
-
-  const uploadForm = document.querySelector('.img-upload__form');
-  const uploadOverlay = uploadForm.querySelector('.img-upload__overlay');
-  const uploadInput = uploadForm.querySelector('.img-upload__input');
-  const uploadHashtags = uploadForm.querySelector('.text__hashtags');
-  const uploadDescription = uploadForm.querySelector('.text__description');
-
+const initialValidate = (form) => {
+  const inputHashtags = form.querySelector('.text__hashtags');
+  const inputDesc = form.querySelector('.text__description');
 
   const pristineConfig = {
     classTo: 'img-upload__field-wrapper',
@@ -74,20 +68,12 @@ const initialForm = () => {
     errorTextClass: 'invalid-text'
   };
 
-  const pristine = new Pristine(uploadForm, pristineConfig, false);
+  const pristine = new Pristine(form, pristineConfig, false);
 
-  pristine.addValidator(uploadHashtags, validateHashtags, getErrorText('hashtags'));
-  pristine.addValidator(uploadDescription, validateDescription, getErrorText('description'));
+  pristine.addValidator(inputHashtags, validateHashtags, getErrorText('hashtags'));
+  pristine.addValidator(inputDesc, validateDescription, getErrorText('description'));
 
-  uploadInput.addEventListener('change', () => {
-    openModal(uploadOverlay, '.img-upload__cancel', true);
-  });
-
-  uploadForm.addEventListener('submit', (evt) => {
-    if (!pristine.validate()) {
-      evt.preventDefault();
-    }
-  });
+  return pristine;
 };
 
-export { initialForm };
+export { initialValidate };

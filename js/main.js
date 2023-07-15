@@ -1,6 +1,6 @@
 import { getPhotos } from './data.js';
 import { renderThumbnails } from './thumbnail.js';
-import { initialForm } from './form.js';
+import { initialForm } from './form/form.js';
 
 const PHOTOS_COUNT = 25;
 
