@@ -1,3 +1,5 @@
+// TODO: Не забыть переделать подгрузку комменитариев!
+
 import { subscribeToEvent } from './util.js';
 
 const commentsContainer = document.querySelector('.social__comments');
