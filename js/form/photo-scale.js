@@ -1,32 +1,39 @@
-const changePhotoScale = (form) => {
-  const MIN = 25;
-  const MAX = 100;
-
-  const scaleValue = form.querySelector('.scale__control--value');
-  const imagePreview = form.querySelector('.img-upload__preview img');
-
-  return (evt) => {
-    let value = parseInt(scaleValue.value, 10);
-
-    if (evt.target.closest('.scale__control--bigger')) {
-      value += MIN;
-    }
-
-    if (evt.target.closest('.scale__control--smaller')) {
-      value -= MIN;
-    }
-
-    if (value <= MAX && value >= MIN) {
-      scaleValue.value = `${value}%`;
-      imagePreview.style.transform = value === 100 ? 'scale(1)' : `scale(0.${value})`;
-    }
-  };
+const PhotoScale = {
+  MIN: 25,
+  MAX: 100,
+  STEP: 25
 };
 
-const initialScalePhoto = (form) => {
-  const imageContainer = form.querySelector('.img-upload__scale');
+const scaleWrapperNode = document.querySelector('.img-upload__scale');
+const scaleInputNode = document.querySelector('.scale__control--value');
+const imagePreviewNode = document.querySelector('.img-upload__preview img');
 
-  imageContainer.addEventListener('click', changePhotoScale(form));
+const onScaleWrapperClick = (evt) => {
+
+  let value = parseInt(scaleInputNode.value, 10);
+
+  if (evt.target.closest('.scale__control--bigger')) {
+    value += PhotoScale.STEP;
+  }
+
+  if (evt.target.closest('.scale__control--smaller')) {
+    value -= PhotoScale.STEP;
+  }
+
+  if (value <= PhotoScale.MAX && value >= PhotoScale.MIN) {
+    scaleInputNode.value = `${value}%`;
+    imagePreviewNode.style.transform = value === 100 ? 'scale(1)' : `scale(0.${value})`;
+  }
+
 };
 
-export { initialScalePhoto };
+const initialPhotoScale = () => {
+  scaleWrapperNode.addEventListener('click', onScaleWrapperClick);
+};
+
+const removePhotoScale = () => {
+  imagePreviewNode.style.transform = '';
+  scaleWrapperNode.removeEventListener('click', onScaleWrapperClick);
+};
+
+export { initialPhotoScale, removePhotoScale };
