@@ -1,46 +1,4 @@
-const getRandomIntegerFromRange = (a, b) => {
-  const lower = Math.ceil(Math.min(a, b));
-  const upper = Math.floor(Math.max(a, b));
-  const result = Math.random() * (upper - lower + 1) + lower;
-
-  return Math.floor(result);
-};
-
-const createUniqueRandomId = (min, max) => {
-  const previousValues = [];
-
-  return () => {
-    let currentValue = getRandomIntegerFromRange(min, max);
-
-    if (previousValues.length >= (max - min + 1)) {
-      return null;
-    }
-
-    while (previousValues.includes(currentValue)) {
-      currentValue = getRandomIntegerFromRange(min, max);
-    }
-
-    previousValues.push(currentValue);
-
-    return currentValue;
-  };
-};
-
-const getRandomArrayElement = (elements) => elements[getRandomIntegerFromRange(0, elements.length - 1)];
-
-const getRandomArrayElements = (elements, quantity = 1) => {
-  const array = [];
-  for (let i = 0; i < quantity; i++) {
-    array.push(elements[getRandomIntegerFromRange(0, elements.length - 1)]);
-  }
-
-  return array;
-};
-
-const subscribeToEvent = (target, eventName, handler) => {
-  target.addEventListener(eventName, handler);
-  return () => target.removeEventListener(eventName, handler);
-};
+const ALERT_SHOW_TIME = 5000;
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
@@ -53,12 +11,29 @@ const hasDuplicates = (array) => {
   return false;
 };
 
+const showAlert = (message) => {
+  const alertContainer = document.createElement('div');
+  alertContainer.style.zIndex = '100';
+  alertContainer.style.position = 'absolute';
+  alertContainer.style.left = '0';
+  alertContainer.style.top = '0';
+  alertContainer.style.right = '0';
+  alertContainer.style.padding = '10px 3px';
+  alertContainer.style.fontSize = '30px';
+  alertContainer.style.textAlign = 'center';
+  alertContainer.style.backgroundColor = 'red';
+
+  alertContainer.textContent = message;
+
+  document.body.append(alertContainer);
+
+  setTimeout(() => {
+    alertContainer.remove();
+  }, ALERT_SHOW_TIME);
+};
+
 export {
-  getRandomIntegerFromRange,
-  createUniqueRandomId,
-  getRandomArrayElement,
-  getRandomArrayElements,
-  subscribeToEvent,
   isEscapeKey,
-  hasDuplicates
+  hasDuplicates,
+  showAlert
 };

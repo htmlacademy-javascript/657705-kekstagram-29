@@ -1,9 +1,13 @@
 import { hasDuplicates } from '../util.js';
 
+const formNode = document.querySelector('.img-upload__form');
+
 const invalidText = {
   hashtags: [],
   description: []
 };
+
+let pristine;
 
 const getErrorText = (text) => () => invalidText[text].map((el) => `<span>${el}</span>`).join('');
 const getValueWithTrimmedSpaces = (value) => value.replace(/\s+/g, ' ');
@@ -56,9 +60,9 @@ const validateDescription = (value) => {
   return invalidText.description.length === 0;
 };
 
-const initialValidate = (form) => {
-  const inputHashtags = form.querySelector('.text__hashtags');
-  const inputDesc = form.querySelector('.text__description');
+const initValidate = () => {
+  const inputHashtags = formNode.querySelector('.text__hashtags');
+  const inputDesc = formNode.querySelector('.text__description');
 
   const pristineConfig = {
     classTo: 'img-upload__field-wrapper',
@@ -68,12 +72,15 @@ const initialValidate = (form) => {
     errorTextClass: 'invalid-text'
   };
 
-  const pristine = new Pristine(form, pristineConfig, false);
+  pristine = new Pristine(formNode, pristineConfig, false);
 
   pristine.addValidator(inputHashtags, validateHashtags, getErrorText('hashtags'));
   pristine.addValidator(inputDesc, validateDescription, getErrorText('description'));
 
-  return pristine;
 };
 
-export { initialValidate };
+const resetValidate = () => pristine.destroy();
+
+const isValidForm = () => pristine.validate();
+
+export { initValidate, resetValidate, isValidForm };

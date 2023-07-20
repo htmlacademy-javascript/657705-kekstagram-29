@@ -1,36 +1,48 @@
-import { openModal } from '../modal-utils.js';
-import { initialValidate } from './inputs-validate.js';
-import { initialFilter, removeFilter } from './photo-filter.js';
-import { initialPhotoScale, removePhotoScale } from './photo-scale.js';
+import { sendData } from '../api.js';
+import { openFormModal, openSubmitedFormModal } from './form-modal.js';
+import { initValidate, resetValidate, isValidForm } from './form-inputs-validate.js';
+import { initPhotoScale, resetPhotoScale } from './form-photo-scale.js';
+import { initFilter, resetFilter } from './form-photo-filter.js';
 
-const uploadForm = document.querySelector('.img-upload__form');
-let formValidator;
+const uploadFormNode = document.querySelector('.img-upload__form');
+const uploadInputNode = uploadFormNode.querySelector('.img-upload__input');
 
-const initialForm = () => {
+const initForm = () => {
+  uploadInputNode.addEventListener('change', () => {
 
-  const uploadOverlay = uploadForm.querySelector('.img-upload__overlay');
-  const uploadInput = uploadForm.querySelector('.img-upload__input');
+    initValidate();
+    initPhotoScale();
+    initFilter();
 
-  uploadInput.addEventListener('change', () => {
-    openModal(uploadOverlay, '.img-upload__cancel', true);
-
-    formValidator = initialValidate(uploadForm);
-    initialPhotoScale();
-    initialFilter();
+    openFormModal();
   });
 
-  uploadForm.addEventListener('submit', (evt) => {
-    if (!formValidator.validate()) {
-      evt.preventDefault();
+  uploadFormNode.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    if (isValidForm()) {
+      disableSubmitBtn();
+      sendData(new FormData(evt.target))
+        .then(() => openSubmitedFormModal('success'))
+        .catch(() => openSubmitedFormModal('error', true))
+        .finally(enableSubmitBtn);
     }
   });
 };
 
 const resetForm = () => {
-  uploadForm.reset();
-  formValidator.reset();
-  removeFilter();
-  removePhotoScale();
+  uploadFormNode.reset();
+  resetValidate();
+  resetPhotoScale();
+  resetFilter();
 };
 
-export { initialForm, resetForm };
+function disableSubmitBtn() {
+  uploadFormNode.querySelector('.img-upload__submit').disabled = true;
+}
+
+function enableSubmitBtn() {
+  uploadFormNode.querySelector('.img-upload__submit').disabled = false;
+}
+
+export { initForm, resetForm };

@@ -27,13 +27,13 @@ const onScaleWrapperClick = (evt) => {
 
 };
 
-const initialPhotoScale = () => {
+const initPhotoScale = () => {
   scaleWrapperNode.addEventListener('click', onScaleWrapperClick);
 };
 
-const removePhotoScale = () => {
+const resetPhotoScale = () => {
   imagePreviewNode.style.transform = '';
   scaleWrapperNode.removeEventListener('click', onScaleWrapperClick);
 };
 
-export { initialPhotoScale, removePhotoScale };
+export { initPhotoScale, resetPhotoScale };

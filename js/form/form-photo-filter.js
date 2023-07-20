@@ -100,7 +100,7 @@ const onFilterClick = (evt) => {
 
 };
 
-const initialFilter = () => {
+const initFilter = () => {
   noUiSlider.create(sliderNode, {
     range: {
       min: 0,
@@ -116,10 +116,11 @@ const initialFilter = () => {
   effectsListNode.addEventListener('change', onFilterClick);
 };
 
-const removeFilter = () => {
+const resetFilter = () => {
   previewImageNode.style.filter = '';
   effectInputNode.value = 0;
   sliderNode.noUiSlider.destroy();
+  effectsListNode.removeEventListener('change', onFilterClick);
 };
 
-export { initialFilter, removeFilter };
+export { initFilter, resetFilter };
