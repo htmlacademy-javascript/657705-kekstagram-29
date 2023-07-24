@@ -1,4 +1,4 @@
-import { renderPhoto } from './full-photo.js';
+import { renderPhoto } from './photo-full.js';
 
 const thumbnailTemplate = document.querySelector('#picture')
   .content

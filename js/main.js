@@ -1,8 +1,16 @@
-import { getPhotos } from './data.js';
-import { renderThumbnails } from './thumbnail.js';
-import { initialForm } from './form/form.js';
+import { getData } from './api.js';
+import { renderThumbnails } from './photo/photo-thumbnail.js';
+import { initForm } from './form/form.js';
+import { showAlert } from './util.js';
 
-const PHOTOS_COUNT = 25;
+getData()
+  .then((photosData) => {
+    renderThumbnails(photosData);
+  })
+  .catch(
+    (err) => {
+      showAlert(err.message);
+    }
+  );
 
-renderThumbnails(getPhotos(PHOTOS_COUNT));
-initialForm();
+initForm();
