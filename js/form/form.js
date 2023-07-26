@@ -12,6 +12,10 @@ const imagePreviewNode = document.querySelector('.img-upload__preview img');
 const effectPreviewImagesNode = document.querySelectorAll('.effects__preview');
 const submitBtnNode = uploadFormNode.querySelector('.img-upload__submit');
 
+const toggleSubmitBtn = () => {
+  submitBtnNode.disabled = !submitBtnNode.disabled;
+};
+
 const initForm = () => {
   uploadInputNode.addEventListener('change', () => {
 
@@ -55,9 +59,5 @@ const resetForm = () => {
   resetPhotoScale();
   resetFilter();
 };
-
-function toggleSubmitBtn() {
-  submitBtnNode.disabled = !submitBtnNode.disabled;
-}
 
 export { initForm, resetForm };
