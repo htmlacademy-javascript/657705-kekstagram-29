@@ -1,5 +1,12 @@
 import { hasDuplicates } from '../util.js';
 
+const ErrorMessage = {
+  MAX_HASHTAGS: 'Хэш-тегов не может быть больше пяти',
+  HAS_DUPLICATE: 'Хэш-теги не могут повторяться',
+  INVALID: 'Введён невалидный хэш-тег',
+  MAX_LENGTH: 'Длина комментария не может составлять больше 140 символов'
+};
+
 const formNode = document.querySelector('.img-upload__form');
 
 const invalidText = {
@@ -28,15 +35,15 @@ const validateHashtags = (value) => {
   }
 
   if (hashtags.length > MAX_HASHTAGS) {
-    invalidText.hashtags.push('Хэш-тегов не может быть больше пяти');
+    invalidText.hashtags.push(ErrorMessage.MAX_HASHTAGS);
   }
 
   if (hasDuplicates(hashtags)) {
-    invalidText.hashtags.push('Хэш-теги не могут повторяться');
+    invalidText.hashtags.push(ErrorMessage.HAS_DUPLICATE);
   }
 
   if (invalidHashtags) {
-    invalidText.hashtags.push('Введён невалидный хэш-тег');
+    invalidText.hashtags.push(ErrorMessage.INVALID);
   }
 
   return invalidText.hashtags.length === 0;
@@ -54,7 +61,7 @@ const validateDescription = (value) => {
   }
 
   if (desc.length > MAX_DESC_LENGTH) {
-    invalidText.description.push('Длина комментария не может составлять больше 140 символов');
+    invalidText.description.push(ErrorMessage.MAX_LENGTH);
   }
 
   return invalidText.description.length === 0;

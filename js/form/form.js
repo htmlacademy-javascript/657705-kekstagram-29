@@ -10,6 +10,7 @@ const uploadFormNode = document.querySelector('.img-upload__form');
 const uploadInputNode = uploadFormNode.querySelector('.img-upload__input');
 const imagePreviewNode = document.querySelector('.img-upload__preview img');
 const effectPreviewImagesNode = document.querySelectorAll('.effects__preview');
+const submitBtnNode = uploadFormNode.querySelector('.img-upload__submit');
 
 const initForm = () => {
   uploadInputNode.addEventListener('change', () => {
@@ -20,9 +21,11 @@ const initForm = () => {
     const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
 
     if (matches) {
-      imagePreviewNode.src = URL.createObjectURL(file);
+      const url = URL.createObjectURL(file);
+
+      imagePreviewNode.src = url;
       effectPreviewImagesNode.forEach((el) => {
-        el.style.backgroundImage = `url(${URL.createObjectURL(file)})`;
+        el.style.backgroundImage = `url(${url})`;
       });
     }
 
@@ -37,11 +40,11 @@ const initForm = () => {
     evt.preventDefault();
 
     if (isValidForm()) {
-      disableSubmitBtn();
+      toggleSubmitBtn();
       sendData(new FormData(evt.target))
         .then(() => openSubmitedFormModal('success'))
         .catch(() => openSubmitedFormModal('error', true))
-        .finally(enableSubmitBtn);
+        .finally(toggleSubmitBtn);
     }
   });
 };
@@ -53,12 +56,8 @@ const resetForm = () => {
   resetFilter();
 };
 
-function disableSubmitBtn() {
-  uploadFormNode.querySelector('.img-upload__submit').disabled = true;
-}
-
-function enableSubmitBtn() {
-  uploadFormNode.querySelector('.img-upload__submit').disabled = false;
+function toggleSubmitBtn() {
+  submitBtnNode.disabled = !submitBtnNode.disabled;
 }
 
 export { initForm, resetForm };

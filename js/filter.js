@@ -15,24 +15,17 @@ const filterData = {
 
 const imageFilterForm = document.querySelector('.img-filters__form');
 
-const setFilterClick = (cb) => {
-  imageFilterForm.addEventListener('click', (evt) => {
-    document.querySelector('.img-filters__button--active').classList.remove('img-filters__button--active');
-    evt.target.classList.add('img-filters__button--active');
-
-    cb(evt.target);
-  });
-};
-
 function getDefaultData(data) {
   return data;
 }
 
 function getRandomData(data) {
+  const NUMBER_OF_PHOTOS = 10;
+
   const randomData = [];
   const currentData = data.slice();
 
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < NUMBER_OF_PHOTOS; i++) {
     const startIndex = getRandomIntegerFromRange(0, currentData.length - 1);
     randomData.push(currentData.splice(startIndex, 1)[0]);
   }
@@ -43,6 +36,15 @@ function getRandomData(data) {
 function getSortedDataByComments(data) {
   return data.slice().sort((photoA, photoB) => photoB.comments.length - photoA.comments.length);
 }
+
+const setFilterClick = (cb) => {
+  imageFilterForm.addEventListener('click', (evt) => {
+    document.querySelector('.img-filters__button--active').classList.remove('img-filters__button--active');
+    evt.target.classList.add('img-filters__button--active');
+
+    cb(evt.target);
+  });
+};
 
 const rerenderThumbnails = (data, target) => {
   document.querySelectorAll('.picture').forEach((el) => el.remove());

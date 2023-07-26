@@ -22,7 +22,7 @@ const onScaleWrapperClick = (evt) => {
 
   if (value <= PhotoScale.MAX && value >= PhotoScale.MIN) {
     scaleInputNode.value = `${value}%`;
-    imagePreviewNode.style.transform = value === 100 ? 'scale(1)' : `scale(0.${value})`;
+    imagePreviewNode.style.transform = value === PhotoScale.MAX ? 'scale(1)' : `scale(0.${value})`;
   }
 
 };
