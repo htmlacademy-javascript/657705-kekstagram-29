@@ -30,14 +30,14 @@ const initForm = () => {
       imagePreviewNode.src = url;
       effectPreviewImagesNode.forEach((el) => {
         el.style.backgroundImage = `url(${url})`;
+
+        initValidate();
+        initPhotoScale();
+        initFilter();
+
+        openFormModal();
       });
     }
-
-    initValidate();
-    initPhotoScale();
-    initFilter();
-
-    openFormModal();
   });
 
   uploadFormNode.addEventListener('submit', (evt) => {
